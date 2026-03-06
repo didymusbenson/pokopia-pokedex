@@ -7,7 +7,7 @@ from pathlib import Path
 DATA_DIR = Path(__file__).parent.parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
-mcp = FastMCP("open-brain")
+mcp = FastMCP("coppermind")
 
 client = chromadb.PersistentClient(path=str(DATA_DIR))
 collection = client.get_or_create_collection(

@@ -1,4 +1,4 @@
-# Open Brain
+# Coppermind
 
 A local, self-hosted AI knowledge base that provides persistent, semantically searchable memory to any AI coding assistant or agent via the [Model Context Protocol (MCP)](https://modelcontextprotocol.io/).
 
@@ -7,7 +7,7 @@ A local, self-hosted AI knowledge base that provides persistent, semantically se
 ## Table of Contents
 
 - [The Problem](#the-problem)
-- [What Open Brain Does](#what-open-brain-does)
+- [What Coppermind Does](#what-coppermind-does)
 - [How It Works](#how-it-works)
 - [Architecture](#architecture)
 - [Available Tools](#available-tools)
@@ -39,16 +39,16 @@ Traditional knowledge management tools (Confluence, Notion, SharePoint, Google D
 
 ---
 
-## What Open Brain Does
+## What Coppermind Does
 
-Open Brain is a **local MCP server** backed by a **vector database** that acts as a shared, persistent brain for all of your AI tools.
+Coppermind is a **local MCP server** backed by a **vector database** that acts as a shared, persistent memory for all of your AI tools.
 
 - **Save** decisions, insights, debugging solutions, architectural patterns, coding standards, project context, or anything else worth remembering
 - **Search** by meaning, not just keywords — ask "how did we handle authentication?" and find relevant results even if the word "authentication" doesn't appear in the stored text
 - **Connect** any MCP-compatible AI tool to the same brain — Claude Code, Cursor, VS Code with Copilot, custom agents, CI/CD pipelines, or internal tooling
 - **Own** your data completely — everything runs locally on your machine (or your organization's infrastructure), nothing is sent to any cloud service
 
-The key insight is that **MCP is the "USB-C of AI"** — it is a standardized protocol that any compliant tool can speak. By building the knowledge layer on MCP, Open Brain is tool-agnostic by default. You are not building for Claude or for ChatGPT; you are building a knowledge base that any current or future AI tool can connect to.
+The key insight is that **MCP is the "USB-C of AI"** — it is a standardized protocol that any compliant tool can speak. By building the knowledge layer on MCP, Coppermind is tool-agnostic by default. You are not building for Claude or for ChatGPT; you are building a knowledge base that any current or future AI tool can connect to.
 
 ---
 
@@ -56,7 +56,7 @@ The key insight is that **MCP is the "USB-C of AI"** — it is a standardized pr
 
 ### Vector Embeddings and Semantic Search
 
-When you save a thought to Open Brain, the text is converted into a **vector embedding** — a high-dimensional numerical representation of the *meaning* of the text. These embeddings are stored in ChromaDB, a purpose-built vector database.
+When you save a thought to Coppermind, the text is converted into a **vector embedding** — a high-dimensional numerical representation of the *meaning* of the text. These embeddings are stored in ChromaDB, a purpose-built vector database.
 
 When you search, your query is also converted into a vector, and ChromaDB finds stored thoughts whose vectors are closest in meaning to your query using **cosine similarity**. This means:
 
@@ -68,7 +68,7 @@ When you search, your query is also converted into a vector, and ChromaDB finds 
 
 The [Model Context Protocol](https://modelcontextprotocol.io/) is an open standard created by Anthropic that defines how AI applications communicate with external tools and data sources. It works like a USB port for AI: any AI tool that supports MCP can connect to any MCP server.
 
-Open Brain exposes its capabilities as **MCP tools** — standardized function definitions that AI assistants can discover, understand, and invoke. When Claude Code (or Cursor, or any other MCP client) connects to Open Brain, it sees the available tools (`save_thought`, `search_brain`, etc.) and can use them naturally as part of its workflow.
+Coppermind exposes its capabilities as **MCP tools** — standardized function definitions that AI assistants can discover, understand, and invoke. When Claude Code (or Cursor, or any other MCP client) connects to Coppermind, it sees the available tools (`save_thought`, `search_brain`, etc.) and can use them naturally as part of its workflow.
 
 ### The Compounding Effect
 
@@ -97,7 +97,7 @@ Every thought you save makes every future AI interaction more informed. The brai
          +------------+------------+-------------------------+
                       |
               +-------+--------+
-              |  Open Brain    |
+              |  Coppermind    |
               |  MCP Server    |
               |  (Python)      |
               +-------+--------+
@@ -128,7 +128,7 @@ Every thought you save makes every future AI interaction more informed. The brai
 
 ## Available Tools
 
-Open Brain exposes six MCP tools that any connected AI assistant can invoke:
+Coppermind exposes six MCP tools that any connected AI assistant can invoke:
 
 ### `save_thought`
 Save a thought, note, decision, or piece of knowledge to the brain.
@@ -197,7 +197,7 @@ Get statistics about the brain — total thought count, category breakdown, and 
 
 - **Institutional knowledge preservation:** When senior engineers leave, their knowledge doesn't walk out the door. Decisions, context, and expertise persist in the brain.
 - **Compliance and audit trail:** Every decision and its rationale is stored with timestamps. Useful for regulated industries where you need to demonstrate why specific technical choices were made.
-- **AI tool evaluation:** Since Open Brain is tool-agnostic via MCP, organizations can evaluate and switch between AI tools without losing their accumulated knowledge base. No vendor lock-in.
+- **AI tool evaluation:** Since Coppermind is tool-agnostic via MCP, organizations can evaluate and switch between AI tools without losing their accumulated knowledge base. No vendor lock-in.
 - **Internal documentation that AI can actually use:** Instead of (or in addition to) maintaining Confluence pages that AI tools can't efficiently parse, save structured knowledge to the brain where it's immediately machine-readable and semantically searchable.
 - **Multi-agent orchestration:** In advanced setups, multiple AI agents working on different parts of a project can share a single brain. Agent A's architectural decisions are immediately visible to Agent B's implementation work.
 
@@ -220,8 +220,8 @@ Get statistics about the brain — total thought count, category breakdown, and 
 
 ```bash
 # Clone the repository
-git clone https://github.com/WintersRain/open-brain.git
-cd open-brain
+git clone https://github.com/WintersRain/coppermind.git
+cd coppermind
 
 # Install dependencies with uv
 uv sync
@@ -250,8 +250,8 @@ uv run python src/server.py
 ### Claude Code
 
 ```bash
-claude mcp add --transport stdio open-brain -- \
-  python -m uv run --directory /path/to/open-brain python src/server.py
+claude mcp add --transport stdio coppermind -- \
+  python -m uv run --directory /path/to/coppermind python src/server.py
 ```
 
 Once added, Claude Code will automatically start the server when needed. You can verify with:
@@ -260,7 +260,7 @@ Once added, Claude Code will automatically start the server when needed. You can
 claude mcp list
 ```
 
-You should see `open-brain` with status `Connected`.
+You should see `coppermind` with status `Connected`.
 
 ### Cursor
 
@@ -269,9 +269,9 @@ Add to your Cursor MCP settings (`.cursor/mcp.json` or global settings):
 ```json
 {
   "mcpServers": {
-    "open-brain": {
+    "coppermind": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/open-brain", "python", "src/server.py"]
+      "args": ["run", "--directory", "/path/to/coppermind", "python", "src/server.py"]
     }
   }
 }
@@ -284,9 +284,9 @@ Add to your VS Code MCP configuration (location varies by extension):
 ```json
 {
   "mcpServers": {
-    "open-brain": {
+    "coppermind": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/open-brain", "python", "src/server.py"]
+      "args": ["run", "--directory", "/path/to/coppermind", "python", "src/server.py"]
     }
   }
 }
@@ -297,7 +297,7 @@ Add to your VS Code MCP configuration (location varies by extension):
 The server uses **stdio transport** by default. Point any MCP client at:
 
 ```
-command: uv run --directory /path/to/open-brain python src/server.py
+command: uv run --directory /path/to/coppermind python src/server.py
 transport: stdio
 ```
 

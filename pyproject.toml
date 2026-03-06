@@ -1,7 +1,7 @@
 [project]
-name = "open-brain"
+name = "coppermind"
 version = "0.1.0"
-description = "Local AI brain - vector-searchable knowledge base via MCP"
+description = "Local AI memory - vector-searchable knowledge base via MCP"
 requires-python = ">=3.10"
 dependencies = [
     "mcp[cli]>=1.0.0",
